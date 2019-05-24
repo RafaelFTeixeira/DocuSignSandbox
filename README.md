@@ -10,7 +10,7 @@
   - Set environment into `docker-compose.yml`
   - run `docker-compose up`
   
- ### RUN
+ ### RUN IN SPRING
   - Declare environments in your machine
     - *ACCOUNT_ID* and *ACCESS_TOKEN*
   - Execute:

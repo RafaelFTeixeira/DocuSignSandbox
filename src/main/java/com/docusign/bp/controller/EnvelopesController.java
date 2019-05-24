@@ -2,6 +2,7 @@ package com.docusign.bp.controller;
 
 import java.io.IOException;
 
+import com.docusign.bp.dto.SignerDto;
 import com.docusign.bp.service.ConsultEnvelopesService;
 import com.docusign.bp.service.SendEnvelopeService;
 import com.docusign.esign.client.ApiException;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -30,12 +32,10 @@ public class EnvelopesController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    public ResponseEntity<Object> create() throws ApiException, IOException {
-        String signerName = "Rafael Teixeira";
-        String signerEmail = "rafaelteixeiradev@gmail.com";
+    public ResponseEntity<Object> create(@RequestBody SignerDto signerDto) throws ApiException, IOException {
         String docPdf = "World_Wide_Corp_lorem.pdf";
 
-        Object envelope = sendEnvelopeService.send(docPdf, signerName, signerEmail);
+        Object envelope = sendEnvelopeService.send(docPdf, signerDto.getName(), signerDto.getEmail());
 
         return new ResponseEntity<>(envelope, HttpStatus.OK);
     }

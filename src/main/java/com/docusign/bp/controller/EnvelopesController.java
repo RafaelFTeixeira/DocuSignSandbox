@@ -33,9 +33,7 @@ public class EnvelopesController {
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
     public ResponseEntity<Object> create(@RequestBody SignerDto signerDto) throws ApiException, IOException {
-        String docPdf = "World_Wide_Corp_lorem.pdf";
-
-        Object envelope = sendEnvelopeService.send(docPdf, signerDto.getName(), signerDto.getEmail());
+        Object envelope = sendEnvelopeService.send(signerDto.getName(), signerDto.getEmail());
 
         return new ResponseEntity<>(envelope, HttpStatus.OK);
     }

@@ -6,11 +6,11 @@
   - Create a account in the sandbox
   - Generate your `access token` and `account id`
   
- ### RUN IN DOCKER
+ ### RUN DOCKER
   - Set environment into `docker-compose.yml`
   - run `docker-compose up`
   
- ### RUN IN SPRING
+ ### RUN SPRING
   - Declare environments in your machine
     - *ACCOUNT_ID* and *ACCESS_TOKEN*
   - Execute:

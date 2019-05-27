@@ -21,8 +21,8 @@
   
      ```
      {
-          name: 'Name signer',
-          email: 'Email signer'
+          "name": "Name signer",
+          "email": "Email signer"
      }
      ```
      

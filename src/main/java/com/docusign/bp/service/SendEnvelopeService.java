@@ -3,7 +3,9 @@ package com.docusign.bp.service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.docusign.bp.Configuration;
 import com.docusign.esign.api.EnvelopesApi;
@@ -16,6 +18,7 @@ import com.docusign.esign.model.Recipients;
 import com.docusign.esign.model.SignHere;
 import com.docusign.esign.model.Signer;
 import com.docusign.esign.model.Tabs;
+import com.docusign.esign.model.TemplateRole;
 import com.sun.jersey.core.util.Base64;
 
 import org.json.JSONObject;
@@ -28,12 +31,18 @@ public class SendEnvelopeService {
         byte[] buffer = readFile(pathDocPdf);
         String docBase64 = new String(Base64.encode(buffer));
 
-        Document document = createDocument(docBase64);
-        SignHere signHere = createSignHere();
-        Tabs signerTabs = createTabs(signHere);
-        Signer signer = createSigner(signerName, signerEmail, signerTabs);
-        Recipients recipients = createRecipients(signer);
-        EnvelopeDefinition envelopeDefinition = createEnvelope(document, recipients);
+        // Document document = createDocument(docBase64);
+        // SignHere signHere = createSignHere();
+        // Tabs signerTabs = createTabs(signHere);
+        // Signer signer = createSigner(signerName, signerEmail, signerTabs);
+        // Recipients recipients = createRecipients(signer);
+        // EnvelopeDefinition envelopeDefinition = createEnvelope(document, recipients);
+        EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
+        TemplateRole tRole = createTemplateRole(signerName, signerEmail);
+        List<TemplateRole> tRoles = new ArrayList<TemplateRole>();
+        tRoles.add(tRole);
+        envelopeDefinition.setTemplateId("74ff7051-8792-4a9a-b0dd-65b9947197f7");
+        envelopeDefinition.setTemplateRoles(tRoles);
 
         ApiClient apiClient = new ApiClient(Configuration.API_DOCUSIGN);
         apiClient.addDefaultHeader("Authorization", "Bearer " + Configuration.ACCESS_TOKEN);
@@ -71,6 +80,13 @@ public class SendEnvelopeService {
         signer.recipientId("1");
         signer.setTabs(signerTabs);
         return signer;
+    }
+
+    private TemplateRole createTemplateRole(String name, String email) {
+        TemplateRole tRole = new TemplateRole();
+        tRole.setEmail(email);
+        tRole.setName(name);
+        return tRole;
     }
 
     private Document createDocument(String docBase64) {

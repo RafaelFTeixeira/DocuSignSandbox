@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,8 +32,9 @@ public class EnvelopesController {
         return new ResponseEntity<>(envelopes, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    public ResponseEntity<Object> create(@RequestBody SignerDto signerDto) throws ApiException, IOException {
+    public ResponseEntity<Object> create(SignerDto signerDto) throws ApiException, IOException {
         Object envelope = sendEnvelopeService.send(signerDto);
 
         return new ResponseEntity<>(envelope, HttpStatus.OK);

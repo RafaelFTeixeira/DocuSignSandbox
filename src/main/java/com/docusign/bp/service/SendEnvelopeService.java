@@ -9,6 +9,7 @@ import com.docusign.bp.dto.SignerDto;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.Checkbox;
 import com.docusign.esign.model.EnvelopeDefinition;
 import com.docusign.esign.model.EnvelopeSummary;
 import com.docusign.esign.model.Tabs;
@@ -77,6 +78,10 @@ public class SendEnvelopeService {
             createText("taf", signerDto.getTaf())
         );
         tabs.textTabs(textTabs);
+        List<Checkbox> checkboxTabs = Arrays.asList(
+            createCheckbox("impresso", signerDto.getImpresso())
+        );
+        tabs.checkboxTabs(checkboxTabs);
         return tabs;
     }
 
@@ -85,5 +90,13 @@ public class SendEnvelopeService {
         text.setTabLabel(label);
         text.setValue(value);
         return text;
+    }
+
+    private Checkbox createCheckbox(String label, Boolean value) {
+        Checkbox check = new Checkbox();
+        check.setTabLabel(label);
+        if(value)
+            check.selected("true");
+        return check;
     }
 }

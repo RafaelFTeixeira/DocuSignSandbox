@@ -5,6 +5,7 @@
   - Access https://appdemo.docusign.com
   - Create a account in the sandbox
   - Generate your `access token` and `account id`
+  - Create a template
   
  ### RUN DOCKER
   - Set environment into `docker-compose.yml`
@@ -12,7 +13,7 @@
   
  ### RUN SPRING
   - Declare environments in your machine
-    - *ACCOUNT_ID* and *ACCESS_TOKEN*
+    - *ACCOUNT_ID*, *ACCESS_TOKEN* and *TEMPLATE_ID*
   - Execute:
     - `mvn clean install`
     - `mvn spring-boot:run`

@@ -1,0 +1,6 @@
+/home/devaws/projetos/docuSignSandbox/bp/src/main/java/com/docusign/bp/service/ConsultEnvelopesService.java
+/home/devaws/projetos/docuSignSandbox/bp/src/main/java/com/docusign/bp/controller/EnvelopesController.java
+/home/devaws/projetos/docuSignSandbox/bp/src/main/java/com/docusign/bp/service/SendEnvelopeService.java
+/home/devaws/projetos/docuSignSandbox/bp/src/main/java/com/docusign/bp/BpApplication.java
+/home/devaws/projetos/docuSignSandbox/bp/src/main/java/com/docusign/bp/dto/SignerDto.java
+/home/devaws/projetos/docuSignSandbox/bp/src/main/java/com/docusign/bp/Configuration.java

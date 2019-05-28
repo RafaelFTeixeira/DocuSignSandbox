@@ -1,0 +1,6 @@
+com/docusign/bp/service/SendEnvelopeService.class
+com/docusign/bp/BpApplication.class
+com/docusign/bp/service/ConsultEnvelopesService.class
+com/docusign/bp/Configuration.class
+com/docusign/bp/dto/SignerDto.class
+com/docusign/bp/controller/EnvelopesController.class

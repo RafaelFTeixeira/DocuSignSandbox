@@ -1,7 +1,6 @@
 package com.docusign.bp.service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +21,8 @@ import org.springframework.stereotype.Service;
 public class SendEnvelopeService {
 
     public Object send(String signerName, String signerEmail) throws ApiException, IOException {
-        List<TemplateRole> tRoles = createTemplateRole(signerName, signerEmail);
+        Tabs tabs = createTabs(signerName, signerEmail);
+        List<TemplateRole> tRoles = createTemplateRole(signerName, signerEmail, tabs);
         EnvelopeDefinition envelopeDefinition = createEnvelope(tRoles);
 
         ApiClient apiClient = new ApiClient(Configuration.API_DOCUSIGN);
@@ -35,29 +35,34 @@ public class SendEnvelopeService {
 
     private EnvelopeDefinition createEnvelope(List<TemplateRole> tRoles) {
         EnvelopeDefinition envelopeDefinition = new EnvelopeDefinition();
-        envelopeDefinition.setTemplateId("f7e410ca-45a7-4b6b-ab95-87d486488623");
+        envelopeDefinition.setTemplateId(Configuration.TEMPLATE_ID);
         envelopeDefinition.setTemplateRoles(tRoles);
         envelopeDefinition.setStatus("sent");
         return envelopeDefinition;
     }
 
-    private List<TemplateRole> createTemplateRole(String name, String email) {
+    private List<TemplateRole> createTemplateRole(String name, String email, Tabs tabs) {
         TemplateRole tRole = new TemplateRole();
+        tRole.setTabs(tabs);
         tRole.setEmail(email);
         tRole.setName(name);
         tRole.setRoleName("Client");
+        return Arrays.asList(tRole);
+    }
+
+    private Tabs createTabs(String name, String email) {
         Tabs tabs = new Tabs();
-        Text text = new Text();
-        text.setTabLabel("fullName");
-        text.setValue(name);
-        Text text2 = new Text();
-        text2.tabLabel("email");
-        text2.setValue(email);
+        Text text = createText("fullName", name);
+        Text text2 = createText("name", email);
         List<Text> textTabs = Arrays.asList(text, text2);
         tabs.textTabs(textTabs);
-        tRole.setTabs(tabs);
-        List<TemplateRole> tRoles = new ArrayList<TemplateRole>();
-        tRoles.add(tRole);
-        return tRoles;
+        return tabs;
+    }
+
+    private Text createText(String label, String value) {
+        Text text = new Text();
+        text.setTabLabel(label);
+        text.setValue(value);
+        return text;
     }
 }

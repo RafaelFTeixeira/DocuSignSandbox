@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.docusign.bp.Configuration;
+import com.docusign.bp.dto.SignerDto;
 import com.docusign.esign.api.EnvelopesApi;
 import com.docusign.esign.client.ApiClient;
 import com.docusign.esign.client.ApiException;
@@ -20,9 +21,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class SendEnvelopeService {
 
-    public Object send(String signerName, String signerEmail) throws ApiException, IOException {
-        Tabs tabs = createTabs(signerName, signerEmail);
-        List<TemplateRole> tRoles = createTemplateRole(signerName, signerEmail, tabs);
+    public Object send(SignerDto signerDto) throws ApiException, IOException {
+        Tabs tabs = createTabs(signerDto);
+        List<TemplateRole> tRoles = createTemplateRole(signerDto.getName(), signerDto.getEmail(), tabs);
         EnvelopeDefinition envelopeDefinition = createEnvelope(tRoles);
 
         ApiClient apiClient = new ApiClient(Configuration.API_DOCUSIGN);
@@ -50,11 +51,31 @@ public class SendEnvelopeService {
         return Arrays.asList(tRole);
     }
 
-    private Tabs createTabs(String name, String email) {
+    private Tabs createTabs(SignerDto signerDto) {
         Tabs tabs = new Tabs();
-        Text text = createText("fullName", name);
-        Text text2 = createText("name", email);
-        List<Text> textTabs = Arrays.asList(text, text2);
+        List<Text> textTabs = Arrays.asList(
+            createText("fullName", signerDto.getName()),
+            createText("cpf", signerDto.getCpf()),
+            createText("nacionalidade", signerDto.getNacionalidade()),
+            createText("dataNascimento", signerDto.getDataNascimento()),
+            createText("sexo", signerDto.getSexo()),
+            createText("estadoCivil", signerDto.getEstadoCivil()),
+            createText("profissao", signerDto.getProfissao()),
+            createText("renda", signerDto.getRenda()),
+            createText("documento", signerDto.getDocumento()),
+            createText("dataEmissao", signerDto.getDataEmissao()),
+            createText("orgaoExpedidor", signerDto.getOrgaoExpedidor()),
+            createText("endereco", signerDto.getEndereco()),
+            createText("bairro", signerDto.getBairro()),
+            createText("cidade", signerDto.getCidade()),
+            createText("uf", signerDto.getUf()),
+            createText("cep", signerDto.getCep()),
+            createText("telefone", signerDto.getTelefone()),
+            createText("nomeFundo", signerDto.getNomeFundo()),
+            createText("siglaReferencia", signerDto.getSiglaReferencia()),
+            createText("cnpjFundo", signerDto.getCnpjFundo()),
+            createText("taf", signerDto.getTaf())
+        );
         tabs.textTabs(textTabs);
         return tabs;
     }

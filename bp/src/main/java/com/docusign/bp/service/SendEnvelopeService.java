@@ -94,9 +94,10 @@ public class SendEnvelopeService {
 
     private Checkbox createCheckbox(String label, Boolean value) {
         Checkbox check = new Checkbox();
-        check.setTabLabel(label);
-        if(value)
+        if(null != value && value) {
+            check.setTabLabel(label);
             check.selected("true");
+        }
         return check;
     }
 }
